@@ -70,16 +70,60 @@ console.log(employeeName);
 let deck = {
   suits: ["hearts", "spades", "clubs", "diamonds"],
     cards: Array(52),
-    createCardPicker: function() {
-        return function() {
-            let pickedCard = Math.floor(Math.random() * 52);
-            let pickedSuit = Math.floor(pickedCard / 13);
+    createCardPicker:
+      function() {
+        // NOTE: the line below is now an arrow function, allowing us to capture 'this' right here
+          // return function() {
+          return ()=>{
+              let pickedCard = Math.floor(Math.random() * 52);
+              let pickedSuit = Math.floor(pickedCard / 13);
 
-            return {suit: this.suits[pickedSuit], card: pickedCard % 13};
-        }
-    }
+              return {suit: this.suits[pickedSuit], card: pickedCard % 13};
+          }
+      }
+
 }
 let cardPicker = deck.createCardPicker();
 let pickedCard = cardPicker();
 
 alert("card: " + pickedCard.card + " of " + pickedCard.suit);
+
+//#重写deck
+interface Card{
+  suit:string;
+  card:number;
+}
+
+interface Deck{
+  suits:string[];
+  cards:number[];
+  // createCardPicker期望在某个Deck对象上调用。 也就是说 this是Deck类型的，而非any，
+  // 因此--noImplicitThis不会报错了。
+  createCardPicker(this: Deck): () => Card;
+}
+
+let deck1 :Deck =  {
+  suits: ["hearts", "spades", "clubs", "diamonds"],
+  cards: Array(52),
+  // NOTE: The function now explicitly specifies that its callee must be of type Deck
+  createCardPicker: function(this: Deck) {
+      return () => {
+          let pickedCard = Math.floor(Math.random() * 52);
+          let pickedSuit = Math.floor(pickedCard / 13);
+
+          return {suit: this.suits[pickedSuit], card: pickedCard % 13};
+      }
+  }
+}
+
+let cardPickerOne = deck1.createCardPicker();
+let pickedCardOne = cardPickerOne();
+
+alert("card: " + pickedCardOne.card + " of " + pickedCardOne.suit);
+
+
+//this参数在回调函数里
+// 你可以也看到过在回调函数里的this报错，当你将一个函数传递到某个库函数里稍后会被调用时。
+// 因为当回调被调用的时候，它们会被当成一个普通函数调用， this将为undefined。
+
+ 
