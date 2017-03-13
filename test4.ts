@@ -93,12 +93,12 @@ let mystr = myArray[0]; //bob
 
 
 // Error: indexing with a 'string' will sometimes get you a Dog!
-class Animal {
-    name: string;
-}
-class Dog extends Animal {
-    breed: string;
-}
+// class Animal {
+//     name: string;
+// }
+// class Dog extends Animal {
+//     breed: string;
+// }
 
 // interface NotOkay {
 //     [x: number]: Animal;
