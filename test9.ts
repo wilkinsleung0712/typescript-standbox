@@ -54,10 +54,11 @@ interface Fish {
     layEggs();
 }
 
-function getSmallPet(): Fish | Bird {
-    // ...
-}
+// function getSmallPet(): Fish | Bird {
+//     // ...
+// }
 
-let pet = getSmallPet();
-pet.layEggs(); // okay
-// pet.swim();    // errors
+
+// let pet = getSmallPet();
+// pet.layEggs(); // okay
+// // pet.swim();    // errors

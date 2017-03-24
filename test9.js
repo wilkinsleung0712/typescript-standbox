@@ -29,7 +29,3 @@ var n = jim.name;
 jim.log();
 function padLeft(value, padding) {
 }
-function getSmallPet() {
-}
-var pet = getSmallPet();
-pet.layEggs();
